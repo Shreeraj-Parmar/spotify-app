@@ -36,10 +36,13 @@ app.use(cookieParser());
 // Create Spotify Router
 
 // Use the Spotify router for "/spotify" route
+
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
 app.use('/spotify', spotifyRouter);
 app.use('/', playerRouter);
-
-
 
 /**
  * "/login" route
