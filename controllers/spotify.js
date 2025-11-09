@@ -10,6 +10,9 @@ import { getCurruntPlayingSong, getListOfArtistsYouFollow, getTopTracks } from "
  */
 export const getMySpotifyDetails = async (req, res) => {
 
+
+    console.log("inside spotify controller", req.cookies);
+
     // Get Accesss Token
     const token = req.cookies['spotify_access_token'];
 
