@@ -70,7 +70,10 @@ app.get('/callback', async (req, res) => {
         const tokenResponse = await getAccessToken(code);
 
         res.cookie('spotify_access_token', tokenResponse, { httpOnly: true, sameSite: 'Strict', maxAge: 1000 * 60 * 60 });
-        res.redirect('/spotify');
+
+        setTimeout(() => {
+            res.redirect('/spotify');
+        }, 1000);
 
     } catch (error) {
         console.error("Error exchanging code for token:", error.response?.data);
