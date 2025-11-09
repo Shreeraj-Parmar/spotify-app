@@ -77,7 +77,7 @@ app.get('/callback', async (req, res) => {
         });
 
         // Immediately redirect
-        return res.redirect('/spotify');
+        return res.redirect(`/spotify?token=${tokenResponse}`);
 
     } catch (error) {
         console.error("Error exchanging code for token:", error.response?.data);

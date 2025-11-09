@@ -10,11 +10,16 @@ import { getCurruntPlayingSong, getListOfArtistsYouFollow, getTopTracks } from "
  */
 export const getMySpotifyDetails = async (req, res) => {
 
-
     console.log("inside spotify controller", req.cookies);
 
     // Get Accesss Token
-    const token = req.cookies['spotify_access_token'];
+    const token = req.cookies['spotify_access_token'] || req?.query?.token;
+
+
+
+    if (!token) {
+        return res.status(401).json({ error: 'Access token missing. Please login again.' });
+    }
 
     // Show a list of the artists you follow.
     const followedArtists = await getListOfArtistsYouFollow(token);
@@ -65,12 +70,23 @@ export const getMySpotifyDetails = async (req, res) => {
     } : null;
 
 
+
     // Send the response
-    res.status(200).json({
-        followedArtists: atrist_list,
-        topTracks: top_tracks,
-        curruntPlayingSong: currunt_playing_song
-    });
+    if (req.query.token) {
+        res.status(200).json({
+            followedArtists: atrist_list,
+            topTracks: top_tracks,
+            curruntPlayingSong: currunt_playing_song
+        }).redirect('/spotify');
+    } else {
+        res.status(200).json({
+            followedArtists: atrist_list,
+            topTracks: top_tracks,
+            curruntPlayingSong: currunt_playing_song
+        })
+
+    }
+
 
 }
 
